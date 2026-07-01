@@ -57,7 +57,7 @@ describe Board do
 
     context 'when all cells are empty' do
       it 'returns false' do
-        board.instance_variable_set(:@board, Array.new(6) {Array.new(7)})
+        board.instance_variable_set(:@board, Array.new(6) { Array.new(7) })
         expect(board.four_in_a_row('X')).to be(false)
       end
     end
@@ -91,7 +91,7 @@ describe Board do
     context 'when there is four in a row horizontally' do
       it 'returns true' do
         board.instance_variable_set(:@board,
-                                    [[1, 3, 2, 1], ['X', 'X', 'X', 'X'], [2, 2, 3, 1], [3, 4, 5, 6], [4, 6, 5, 4]])
+                                    [[1, 3, 2, 1], %w[X X X X], [2, 2, 3, 1], [3, 4, 5, 6], [4, 6, 5, 4]])
         expect(board.four_in_a_row('X')).to be(true)
       end
     end
