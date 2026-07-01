@@ -29,6 +29,7 @@ class Game
   end
 
   def play_round
+    @board.print_board(@board.board)
     chosen_column = @current_player.choose_column 
     @board.check_player_choice(chosen_column, @current_player.symbol)
   end
@@ -36,6 +37,7 @@ class Game
   def check_for_winner
     return unless @board.set_of_four
 
+    @board.print_board(@board.board)
     puts "Hurrah! Player #{@current_player.id} won! Better luck next time Player #{@players[1].id}"
     true
   end
@@ -43,8 +45,8 @@ class Game
   def check_for_draw
     return unless @board.board.any?(nil) && !@board.set_of_four
 
+    @board.print_board(@board.board)
     puts "It's a draw! Good game- it appears you have each met your match."
-    puts "All of board- #{@board.board}"
     true
   end
 end

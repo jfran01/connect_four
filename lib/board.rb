@@ -1,5 +1,9 @@
+require_relative 'renderer'
+
 class Board
   attr_reader :board
+
+  include Render
 
   def initialize
     @board = Array.new(6) {Array.new(7)}
