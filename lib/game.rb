@@ -6,8 +6,8 @@ class Game
 
   def initialize
     @board = Board.new
-    @player_one = Player.new
-    @player_two = Player.new
+    @player_one = Player.new(1)
+    @player_two = Player.new(2)
     @players = [@player_one, @player_two]
     @current_player = @players[0]
   end
@@ -20,24 +20,34 @@ class Game
   def play_game
     @player_one.choose_symbol
     @player_two.choose_symbol
-    play_round until check_for_winner || check_for_draw
+    loop do
+      play_round 
+      break if check_for_winner
+      break if check_for_draw
+      change_player
+    end
   end
 
   def play_round
-    @current_player.make_choice
+    chosen_column = @current_player.choose_column 
+    @board.check_player_choice(chosen_column, @current_player.symbol)
   end
 
   def check_for_winner
-    return unless @board.four_in_a_row
+    return unless @board.set_of_four
 
-    puts "Hurrah! #{@current_player} won! Better luck next time #{@players[1]}"
+    puts "Hurrah! Player #{@current_player.id} won! Better luck next time Player #{@players[1].id}"
     true
   end
 
   def check_for_draw
-    return unless @board.board.all && !@board.four_in_a_row
+    return unless @board.board.any?(nil) && !@board.set_of_four
 
     puts "It's a draw! Good game- it appears you have each met your match."
+    puts "All of board- #{@board.board}"
     true
   end
 end
+
+game = Game.new
+game.play_game

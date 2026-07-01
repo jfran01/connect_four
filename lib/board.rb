@@ -2,7 +2,7 @@ class Board
   attr_reader :board
 
   def initialize
-    @board = Array.new(6, Array.new(7))
+    @board = Array.new(6) {Array.new(7)}
   end
 
   def check_player_choice(chosen_column, symbol)
@@ -22,7 +22,7 @@ class Board
     false
   end
 
-  def four_in_a_row
+  def set_of_four
     true if four_in_a_column || four_in_a_row || four_in_a_diagonal
   end
 
