@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../lib/game'
 
 describe Game do
@@ -5,7 +7,7 @@ describe Game do
 
   describe '#change_player' do
     it 'changes the current player' do
-      expect { game.change_player }.to(change { game.current_player })
+      expect { game.change_player }.to(change(game, :current_player))
     end
   end
 

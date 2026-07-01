@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class Player
   attr_reader :symbol, :id
 
-  def initialize (id)
+  def initialize(id)
     @id = id
   end
 
@@ -13,7 +15,7 @@ class Player
     puts "Player #{@id}, choose one of the following symbols (or enter your own):"
     available_symbols.each_with_index { |sym, i| puts "#{i + 1}: #{sym}" }
     choose_num = gets.chomp
-    @symbol = if choose_num.to_i == 0 || !available_symbols[choose_num.to_i - 1]
+    @symbol = if choose_num.to_i.zero? || !available_symbols[choose_num.to_i - 1]
                 choose_num
               else
                 available_symbols[choose_num.to_i - 1]

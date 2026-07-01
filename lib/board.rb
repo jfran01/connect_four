@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'renderer'
 
 class Board
@@ -6,7 +8,7 @@ class Board
   include Render
 
   def initialize
-    @board = Array.new(6) {Array.new(7)}
+    @board = Array.new(6) { Array.new(7) }
   end
 
   def check_player_choice(chosen_column, symbol)
@@ -26,37 +28,26 @@ class Board
     false
   end
 
-  def set_of_four
-    true if four_in_a_column || four_in_a_row || four_in_a_diagonal
+  def four_in_a_row(symbol)
+    directions = [[0, 1], [1, 0], [1, 1], [-1, 1]]
+    directions.each do |dir|
+      @count = 1
+      @count += check_direction(dir[0], dir[1], symbol)
+      @count += check_direction(-dir[0], -dir[1], symbol)
+      return true if @count == 4
+    end
+    false
   end
 
-  def four_in_a_column
-    column_values = []
-    4.times do |i|
-      column_values.push(@board[@selected_row + i][@selected_column])
+  def check_direction(dr, dc, symbol)
+    count = 0
+    r = @selected_row + dr
+    c = @selected_column + dc
+    while r.between?(0, @board.length - 1) && c.between?(0, @board.length - 1) && @board[r][c] == symbol
+      count += 1
+      r += dr
+      c += dc
     end
-    return false if column_values.any?(nil)
-
-    column_values.uniq.size == 1 ? true : false
-  end
-
-  def four_in_a_row
-    row_values = []
-    8.times do |i|
-      row_values.push(@board[@selected_row][@selected_column + i - 4])
-    end
-    return false if row_values.any?(nil)
-
-    row_values.uniq.size == 1 ? true : false
-  end
-
-  def four_in_a_diagonal
-    diagonal_values = []
-    4.times do |i|
-      diagonal_values.push(@board[@selected_row + i][@selected_column + i])
-    end
-    return false if diagonal_values.any?(nil)
-
-    diagonal_values.uniq.size == 1 ? true : false
+    count
   end
 end
