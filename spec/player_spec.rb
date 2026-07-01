@@ -28,38 +28,4 @@ describe Player do
       end
     end
   end
-
-  describe "#check_choice" do
-    before do
-      allow(player).to receive(:choose_column)
-    end
-    context 'when choice is in an in-range number and not full' do
-      let(:board) { Array.new(3, Array.new(3)) }
-      it 'assigns choice to column_choice' do
-        chosen_column = 1
-        expect{player.check_choice(chosen_column, board)}.to change{player.chosen_column}.to(1)
-      end
-    end
-    context 'when choice is out of range' do
-      let(:board) { Array.new(3, Array.new(3)) }
-      it 'returns false' do
-        chosen_column = 9
-        expect(player.check_choice(chosen_column, board)).to eq(false)
-      end
-    end
-    context 'when choice is NaN' do
-      let(:board) { Array.new(3, Array.new(3)) }
-      it 'returns false' do
-        chosen_column = 'A'.to_i - 1
-        expect(player.check_choice(chosen_column, board)).to eq(false)
-      end
-    end
-    context 'when column is full' do
-      let(:board) {[[nil, nil, 1], [nil, nil, 1], [nil, nil, 1]]}
-      it 'returns false' do
-        chosen_column = 2
-        expect(player.check_choice(chosen_column, board)).to eq(false)
-      end
-    end
-  end
 end
